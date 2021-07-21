@@ -21,17 +21,18 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GithubApiService = void 0;
 const request = __importStar(require("request"));
+const Repo_1 = require("./Repo");
 const User_1 = require("./User");
+const OPTIONS = {
+    headers: {
+        "User-Agent": "request",
+    },
+    json: true, // so we needn't JSON.parse(body) below
+};
 class GithubApiService {
     // method ot make user api call
     getUserInfo(userName, cb) {
-        let options = {
-            headers: {
-                'User-Agent': 'request'
-            },
-            json: true // so we needn't JSON.parse(body) below
-        };
-        request.get('https://api.github.com/users/' + userName, options, (error, response, body) => {
+        request.get("https://api.github.com/users/" + userName, OPTIONS, (error, response, body) => {
             // console.log(body);
             // the json is returned as a string by default so prior to passing it to the User constructor
             // we need to parse it
@@ -42,7 +43,18 @@ class GithubApiService {
         });
     }
     // repos api call
-    getRepos() {
+    getRepos(userName, cb) {
+        request.get("https://api.github.com/users/" + userName + '/repos', OPTIONS, (error, response, body) => {
+            //   let repoArray = body;
+            //   // construct a Repo instance for each element of the repos array
+            //    repoArray.map((repo: any) => new Repo(repo))
+            //    cb(repoArray);
+            // repos - array of repo instances
+            let repos = body.map((repo) => new Repo_1.Repo(repo));
+            cb(repos);
+        });
     }
 }
 exports.GithubApiService = GithubApiService;
+// The map function executes the function passed to it for eah element of the arry
+// and returns a new array with the corresponding return values
