@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "tsc && node out/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/marc9323/github-report/issues"
   },
-  "homepage": "https://github.com/marc9323/github-report#readme"
+  "homepage": "https://github.com/marc9323/github-report#readme",
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.171",
+    "@types/request": "^2.48.6"
+  }
 }
