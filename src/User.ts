@@ -6,6 +6,17 @@ export class User {
     repoCount: number;
     followerCount: number;
 
-    repos: Repo[];
+    // ? = optional
+    repos?: Repo[];
+
+    constructor(userResponse: any) {
+        this.login = userResponse.login;
+        this.fullName = userResponse.name;
+        this.repoCount = userResponse.public_repos;
+        this.followerCount = userResponse.followers;
+        
+        // this.repos = 
+
+    }
 
 }

@@ -21,11 +21,24 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GithubApiService = void 0;
 const request = __importStar(require("request"));
+const User_1 = require("./User");
 class GithubApiService {
     // method ot make user api call
-    getUserInfo(userName) {
-        request.get('https://api.github.com/users/' + userName, null, (response) => {
-            console.log(response);
+    getUserInfo(userName, cb) {
+        let options = {
+            headers: {
+                'User-Agent': 'request'
+            },
+            json: true // so we needn't JSON.parse(body) below
+        };
+        request.get('https://api.github.com/users/' + userName, options, (error, response, body) => {
+            // console.log(body);
+            // the json is returned as a string by default so prior to passing it to the User constructor
+            // we need to parse it
+            //let user = new User(JSON.parse(body));
+            let user = new User_1.User(body);
+            // console.log(user);
+            cb(user);
         });
     }
     // repos api call
